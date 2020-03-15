@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-
+from numpy import *
 def outlierCleaner(predictions, ages, net_worths):
     """
         clean away the 10% of points that have the largest
@@ -12,9 +12,10 @@ def outlierCleaner(predictions, ages, net_worths):
     """
     
     cleaned_data = []
-
-    ### your code goes here
-
-    
+    for i in range(len(predictions)):
+        error = (net_worths[i]- predictions[i]) ** 2
+        cleaned_data.append((ages[i],net_worths[i],error))
+    cleaned_data = sorted(cleaned_data, key = lambda x: x[2])
+    cleaned_data = cleaned_data[0:81]
     return cleaned_data
 

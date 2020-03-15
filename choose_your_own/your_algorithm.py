@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
 features_train, labels_train, features_test, labels_test = makeTerrainData()
@@ -33,14 +33,10 @@ plt.show()
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
 
-clf = RandomForestClassifier(n_estimators=300,min_samples_split=20,max_depth=2)
+clf = KNeighborsClassifier(n_neighbors=18)
 clf.fit(features_train,labels_train)
 pred = clf.predict(features_test)
 print(accuracy_score(pred,labels_test))
-
-
-
-
 
 
 try:
