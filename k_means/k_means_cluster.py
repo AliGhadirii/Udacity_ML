@@ -43,11 +43,11 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
 data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "rb") )
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
-temp = []
-for i in data_dict.values():
-    if i['salary'] != 'NaN':
-        temp.append(int(i['salary']))
-print(min(temp),' ',max(temp))
+# temp = []
+# for i in data_dict.values():
+#     if i['salary'] != 'NaN':
+#         temp.append(int(i['salary']))
+# print(min(temp),' ',max(temp))
 
 
 ### the input features we want to use 
@@ -58,7 +58,36 @@ feature_3 = "total_payments"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
-poi, finance_features = targetFeatureSplit( data )
+poi, finance_features = targetFeatureSplit(data)
+
+temp = [list(e) for e in finance_features]
+salary = []
+stock = []
+
+for i in temp:
+    salary.append([i[0]])
+    stock.append([i[1]])
+from numpy import *
+from sklearn.preprocessing import MinMaxScaler
+scl = MinMaxScaler()
+salary = array(salary)
+stock = array(stock)
+
+
+for i in range(len(salary)):
+    #print(salary[i])
+    if salary[i] == 200000.:
+        print(scl.fit_transform(salary)[i])
+for i in range(len(stock)):
+
+    if stock[i] == 1.:
+        print(scl.fit_transform(stock)[i])
+
+
+
+
+
+
 
 
 ### in the "clustering with 3 features" part of the mini-project,
@@ -72,7 +101,7 @@ plt.show()
 
 
 from sklearn.cluster import KMeans
-features_list = ["poi", feature_1, feature_2]
+features_list = ["poi", 'salary', 'exercised_stock_options']
 data2 = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data2 )
 clf = KMeans(n_clusters=2)
